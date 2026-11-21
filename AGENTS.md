@@ -72,3 +72,16 @@ and Pages never import/read it. Keep site.config.json, the form and workflow out
 light/dark captures after a fresh normal build and run node --test jamstacks/config.test.mjs separately.
 Each new template needs its own business-led layout/fonts/art and OG image; do not ship the neutral
 starter as a final design. Remove `plan/` and `.claude/skills/` before publishing a gallery template once reviewed.
+
+## File ownership (Lighthouse Cover Insurance)
+
+- `content/business.ts`: Business name, email, phone, address, service area, 7-day `hours`, Contact notices and legal disclaimers.
+- `content/cover.ts`: The Light List (`coverTypes`, 10 personal/business lines, `featured`, `available`, panel `insurers`, derived characteristics).
+- `content/insurers.ts`: Panel insurers (`insurers`) and unique maritime signal flags; lines per insurer are derived from `content/cover.ts`.
+- `content/claims.ts`: Urgent emergency strip, 6-step buoyed claims course, checklist and claims FAQs.
+- `content/broker.ts`: Direct-vs-broker comparison rows, compensation copy and keepers' log `team` list.
+- `app/page.tsx`, `app/cover/page.tsx`, `app/claims/page.tsx`, `app/why-a-broker/page.tsx`, `app/contact/page.tsx`, `app/not-found.tsx`: Page composition and editable page prose.
+- `components/artwork/*`: Engraved nautical SVG artwork (`BeaconShield`, `HeroScene`, `TwoRoutesChart`, `SignalFlag`, `ClaimsBuoy`, `CoverIcon`, `OffChartScene`, `nautical-motifs`).
+- `components/home/*`, `components/cover/*`, `components/claims/*`, `components/broker/*`, `components/tide-table-hours.tsx`, `components/insurer-halyard.tsx`, `components/closing-band.tsx`: Backing presentation and browser interaction components.
+- `lib/structured-data.ts`: `InsuranceAgency` JSON-LD derived from `content/business.ts`.
+- `app/tailwind.input.css`: Light, automatic-dark and explicit-dark tokens, chart textures, responsive ledger rules, animations and print styles.

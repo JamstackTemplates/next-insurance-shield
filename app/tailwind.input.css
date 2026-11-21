@@ -1,112 +1,597 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Daymark & Chart palette tokens ───────────────────────────────────────── */
 :root {
-  --bg: #f7f8fa;
-  --surface: #ffffff;
-  --text: #172033;
-  --muted: #526078;
-  --accent: #2457a7;
-  --accent-ink: #2457a7;
-  --on-accent: #ffffff;
-  --line: #c7cfdb;
-  --focus: #2457a7;
-  --map-filter: none;
+  --paper: #F4EFE4;
+  --plate: #FBF8F1;
+  --ink: #13263A;
+  --muted: #4E5D6B;
+  --primary: #B3261E;
+  --primary-hover: #8F1D17;
+  --primary-ink: #A9221B;
+  --on-primary: #FFFFFF;
+  --sea: #1F6F78;
+  --shoal: #CFE0E1;
+  --rule: #9FB8C2;
+  --beam: #E8A33A;
+
+  /* Derived chart tokens */
+  --daymark-white: #FBF8F1;
+  --deep-bg: #13263A;
+  --deep-ink: #F4EFE4;
+  --deep-muted: #C2D0DA;
+  --deep-rule: #2F4B62;
+  --beam-tint: color-mix(in srgb, var(--beam) 16%, var(--plate));
+  --beam-hover: color-mix(in srgb, var(--beam) 20%, var(--plate));
+  --beam-glow-opacity: 0.28;
+  --graticule-line: color-mix(in srgb, var(--rule) 42%, transparent);
+  --grain-opacity: 0.05;
+  --map-filter: saturate(0.85) contrast(1.02);
+  --focus: var(--sea);
   color-scheme: light;
 }
+
 @media (prefers-color-scheme: dark) {
- :root:not(.light) {
-  --bg: #141923;
-  --surface: #1e2633;
-  --text: #f1f5fa;
-  --muted: #b5c2d5;
-  --accent: #2457a7;
-  --accent-ink: #a9cbff;
-  --on-accent: #ffffff;
-  --line: #61708a;
-  --focus: #a9cbff;
-  --map-filter: grayscale(.4) brightness(.8);
-  color-scheme: dark;
- }
+  :root:not(.light) {
+    --paper: #0D1A26;
+    --plate: #142534;
+    --ink: #ECE5D5;
+    --muted: #A7B4BF;
+    --primary: #B8321F;
+    --primary-hover: #D2412C;
+    --primary-ink: #F28C7D;
+    --on-primary: #FFFFFF;
+    --sea: #6FC1C4;
+    --shoal: #1C3646;
+    --rule: #2C4558;
+    --beam: #F2B84B;
+
+    --daymark-white: #E8DFCA;
+    --deep-bg: #08121B;
+    --deep-ink: #ECE5D5;
+    --deep-muted: #A7B4BF;
+    --deep-rule: #253D50;
+    --beam-tint: color-mix(in srgb, var(--beam) 13%, var(--plate));
+    --beam-hover: color-mix(in srgb, var(--beam) 18%, var(--plate));
+    --beam-glow-opacity: 0.44;
+    --graticule-line: color-mix(in srgb, var(--sea) 20%, transparent);
+    --grain-opacity: 0.03;
+    --map-filter: grayscale(0.45) brightness(0.76) contrast(1.08);
+    --focus: var(--sea);
+    color-scheme: dark;
+  }
 }
+
 :root.dark {
-  --bg: #141923;
-  --surface: #1e2633;
-  --text: #f1f5fa;
-  --muted: #b5c2d5;
-  --accent: #2457a7;
-  --accent-ink: #a9cbff;
-  --on-accent: #ffffff;
-  --line: #61708a;
-  --focus: #a9cbff;
-  --map-filter: grayscale(.4) brightness(.8);
+  --paper: #0D1A26;
+  --plate: #142534;
+  --ink: #ECE5D5;
+  --muted: #A7B4BF;
+  --primary: #B8321F;
+  --primary-hover: #D2412C;
+  --primary-ink: #F28C7D;
+  --on-primary: #FFFFFF;
+  --sea: #6FC1C4;
+  --shoal: #1C3646;
+  --rule: #2C4558;
+  --beam: #F2B84B;
+
+  --daymark-white: #E8DFCA;
+  --deep-bg: #08121B;
+  --deep-ink: #ECE5D5;
+  --deep-muted: #A7B4BF;
+  --deep-rule: #253D50;
+  --beam-tint: color-mix(in srgb, var(--beam) 13%, var(--plate));
+  --beam-hover: color-mix(in srgb, var(--beam) 18%, var(--plate));
+  --beam-glow-opacity: 0.44;
+  --graticule-line: color-mix(in srgb, var(--sea) 20%, transparent);
+  --grain-opacity: 0.03;
+  --map-filter: grayscale(0.45) brightness(0.76) contrast(1.08);
+  --focus: var(--sea);
   color-scheme: dark;
 }
 
 @theme {
   --color-*: initial;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --radius-ui: .375rem;
+  --font-display: 'Young Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Public Sans Variable', 'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-ui: 0.25rem;
 }
+
 @theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-ink: var(--text);
+  --color-paper: var(--paper);
+  --color-plate: var(--plate);
+  --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
-  --color-on-accent: var(--on-accent);
-  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-on-primary: var(--on-primary);
+  --color-sea: var(--sea);
+  --color-shoal: var(--shoal);
+  --color-rule: var(--rule);
+  --color-beam: var(--beam);
+  --color-daymark-white: var(--daymark-white);
+  --color-deep-bg: var(--deep-bg);
+  --color-deep-ink: var(--deep-ink);
+  --color-deep-muted: var(--deep-muted);
+  --color-deep-rule: var(--deep-rule);
+  --color-beam-tint: var(--beam-tint);
 }
+
 :root {
-  --measure: 42rem;
+  --measure: 44rem;
+
+  /* Hosted Jamstacks support-form + dark-mode toggle tokens */
   --jamstacks-font-family: var(--font-sans);
-  --jamstacks-color-text: var(--text);
-  --jamstacks-color-background: var(--surface);
-  --jamstacks-color-primary: var(--accent);
-  --jamstacks-color-border: var(--line);
+  --jamstacks-color-text: var(--ink);
+  --jamstacks-color-background: var(--plate);
+  --jamstacks-color-primary: var(--primary);
+  --jamstacks-color-border: var(--rule);
   --jamstacks-color-muted: var(--muted);
-  --jamstacks-color-link: var(--accent-ink);
+  --jamstacks-color-link: var(--sea);
   --jamstacks-border-radius: var(--radius-ui);
   --jamstacks-control-height: 2.75rem;
   --jamstacks-spacing: 1rem;
   --jamstacks-form-max-width: 40rem;
-  --jamstacks-toggle-color: var(--text);
-  --jamstacks-toggle-dark-color: var(--text);
-  --jamstacks-toggle-border: var(--line);
-  --jamstacks-toggle-background: var(--surface);
-  --jamstacks-toggle-dark-background: var(--surface);
+  --jamstacks-toggle-color: var(--ink);
+  --jamstacks-toggle-dark-color: var(--ink);
+  --jamstacks-toggle-border: var(--rule);
+  --jamstacks-toggle-background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  --jamstacks-toggle-dark-background: var(--jamstacks-toggle-background);
   --jamstacks-toggle-focus-color: var(--focus);
 }
+
+/* ─── Base typography & chart-paper canvas ─────────────────────────────────── */
 @layer base {
-  html { background: var(--bg); color: var(--text); font-family: var(--font-sans); scroll-padding-top: 1.5rem; }
-  body { margin: 0; line-height: 1.6; }
-  main { min-height: 65vh; }
-  a { text-underline-offset: .2em; }
-  a:hover { text-decoration: underline; }
-  button { cursor: pointer; }
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-  [aria-current="page"] { text-decoration: underline; }
+  html {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    scroll-padding-top: 5.5rem;
+    accent-color: var(--sea);
+  }
+
+  body {
+    margin: 0;
+    line-height: 1.6;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(to right, var(--graticule-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--graticule-line) 1px, transparent 1px);
+    background-size: 6rem 6rem;
+    background-position: center top;
+  }
+
+  main {
+    min-height: 65vh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1.5px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  [aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-color: var(--primary);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
 }
-@utility wrap { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+
+@utility wrap {
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+}
+
+/* ─── Shared nautical chart components ─────────────────────────────────────── */
 @layer components {
-  .button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: .6rem 1.2rem; border: 1px solid var(--accent); border-radius: var(--radius-ui); background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none; }
-  .button:hover { text-decoration: underline; }
-  .button-quiet { background: var(--surface); color: var(--accent-ink); border-color: var(--line); }
-  .text-link { color: var(--accent-ink); text-decoration: underline; }
-  .eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .skip-link { position: absolute; left: 1rem; top: -8rem; padding: .75rem; z-index: 200; background: var(--surface); }
-  .skip-link:focus { top: 1rem; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.35rem;
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-ui);
+    background: var(--primary);
+    color: var(--on-primary);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .button:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    text-decoration: none;
+  }
+
+  .button-quiet {
+    background: var(--plate);
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+
+  .button-quiet:hover {
+    background: var(--beam-tint);
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .text-link {
+    color: var(--sea);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--sea) 55%, transparent);
+    transition: color 140ms ease, text-decoration-color 140ms ease;
+  }
+
+  .text-link:hover {
+    color: var(--ink);
+    text-decoration-color: var(--ink);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -8rem;
+    padding: 0.75rem 1rem;
+    z-index: 200;
+    background: var(--plate);
+    color: var(--ink);
+    border: 2px solid var(--sea);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Charted plate with fine ruled border and double-hairline inner frame */
+  .chart-plate {
+    position: relative;
+    background: var(--plate);
+    border: 1.5px solid var(--rule);
+    box-shadow: inset 0 0 0 3px var(--plate), inset 0 0 0 4px color-mix(in srgb, var(--rule) 50%, transparent);
+  }
+
+  /* Daymark red-and-white diagonal barber-pole stripe */
+  .daymark-hairline {
+    height: 6px;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--primary) 0 12px,
+      var(--daymark-white) 12px 24px
+    );
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .daymark-band-bg {
+    background-color: var(--daymark-white);
+    background-image: repeating-linear-gradient(
+      -38deg,
+      var(--primary) 0 34px,
+      var(--daymark-white) 34px 68px
+    );
+  }
+
+  /* Chart caution panel (double border, engraved header rule) */
+  .caution-panel {
+    background: var(--plate);
+    border: 2px solid var(--ink);
+    box-shadow: inset 0 0 0 4px var(--plate), inset 0 0 0 5.5px var(--rule);
+  }
+
+  .caution-panel-red {
+    background: var(--plate);
+    border: 2px solid var(--primary);
+    box-shadow: inset 0 0 0 4px var(--plate), inset 0 0 0 5.5px color-mix(in srgb, var(--primary) 45%, transparent);
+  }
+
+  /* Deep-ink night-watch surface (closing band + footer) */
+  .deep-band {
+    background-color: var(--deep-bg);
+    color: var(--deep-ink);
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--deep-rule) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--deep-rule) 45%, transparent) 1px, transparent 1px);
+    background-size: 5rem 5rem;
+  }
+
+  /* Beam highlight for active filter button and hovered Light List rows */
+  .beam-row {
+    transition: background-color 180ms ease;
+  }
+
+  .beam-row:hover,
+  .beam-row:focus-within {
+    background: linear-gradient(
+      95deg,
+      var(--beam-hover) 0%,
+      color-mix(in srgb, var(--beam) 7%, var(--plate)) 62%,
+      var(--plate) 100%
+    );
+  }
+
+  .beam-filter-active {
+    background: linear-gradient(
+      115deg,
+      color-mix(in srgb, var(--beam) 38%, var(--plate)) 0%,
+      color-mix(in srgb, var(--beam) 18%, var(--plate)) 100%
+    );
+    border-color: var(--ink);
+    color: var(--ink);
+  }
 }
-.map iframe { width: 100%; min-height: 20rem; border: 0; filter: var(--map-filter); }
-.enquiry__host { display: block; }
-.enquiry__status { margin-top: 1rem; color: var(--muted); }
-.enquiry[data-state="present"] > .enquiry__status { display: none; }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+
+/* ─── Native <details> disclosures (Light List + Claims FAQs) ──────────────── */
+.chart-details {
+  border-bottom: 1px solid var(--rule);
 }
+
+.chart-details:last-child {
+  border-bottom: 0;
+}
+
+.chart-details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.chart-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.chart-details-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--sea);
+  rotate: 0deg;
+}
+
+.chart-details[open] > summary .chart-details-chevron {
+  rotate: 90deg;
+}
+
+.chart-details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+.chart-details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chart-details-chevron {
+    transition: rotate 0.2s ease;
+  }
+
+  .chart-details::details-content {
+    transition: block-size, content-visibility;
+    transition-duration: 0.28s;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+}
+
+/* ─── Responsive comparison ledger table (container-query driven) ──────────── */
+.ledger-wrapper {
+  container-type: inline-size;
+  overflow-x: auto;
+  max-inline-size: 100%;
+}
+
+.ledger-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+@container (width < 600px) {
+  .ledger-table,
+  .ledger-table thead,
+  .ledger-table tbody,
+  .ledger-table tr,
+  .ledger-table th,
+  .ledger-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .ledger-table thead {
+    display: none;
+  }
+
+  .ledger-table tr {
+    border-bottom: 1.5px solid var(--rule);
+    padding-block: 0.85rem;
+  }
+
+  .ledger-table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .ledger-table tbody th {
+    padding: 0 0 0.5rem 0;
+    border: 0;
+  }
+
+  .ledger-table tbody td {
+    padding: 0.45rem 0.75rem;
+    border: 0;
+  }
+
+  .ledger-table tbody td::before {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .ledger-table tbody td[data-col="direct"]::before {
+    content: "Going direct";
+  }
+
+  .ledger-table tbody td[data-col="broker"]::before {
+    content: "With Lighthouse Cover";
+    color: var(--sea);
+  }
+}
+
+/* ─── Signature Beacon Shield sweeping beam (static wide beam by default) ──── */
+.beacon-sweep {
+  transform-origin: 548px 186px;
+  transform: rotate(-4deg);
+}
+
+.offchart-sweep {
+  transform-origin: 48px 110px;
+  transform: rotate(0deg);
+}
+
+@keyframes lighthouse-sweep {
+  0%, 100% {
+    transform: rotate(-11deg);
+    opacity: 0.82;
+  }
+  50% {
+    transform: rotate(9deg);
+    opacity: 1;
+  }
+}
+
+@keyframes offchart-sweep-anim {
+  0%, 100% {
+    transform: rotate(-10deg);
+    opacity: 0.78;
+  }
+  50% {
+    transform: rotate(8deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .beacon-sweep {
+    animation: lighthouse-sweep 12s ease-in-out infinite;
+  }
+
+  .offchart-sweep {
+    animation: offchart-sweep-anim 12s ease-in-out infinite;
+  }
+}
+
+/* Subtle chart paper grain overlay */
+.chart-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: var(--grain-opacity);
+}
+
+/* ─── Inherited map & hosted enquiry form rules ────────────────────────────── */
+.map iframe {
+  width: 100%;
+  min-height: 20rem;
+  border: 0;
+  display: block;
+  filter: var(--map-filter);
+}
+
+.enquiry__host {
+  display: block;
+}
+
+.enquiry__status {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.enquiry[data-state="present"] > .enquiry__status {
+  display: none;
+}
+
+/* ─── Print styles ─────────────────────────────────────────────────────────── */
 @media print {
-  nav, .skip-link, .enquiry, button { display: none !important; }
-  html { background: white; color: black; }
-  a { color: inherit; }
+  nav,
+  .skip-link,
+  .enquiry,
+  .chart-grain,
+  .beacon-sweep,
+  .offchart-sweep,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+
+  .chart-plate,
+  .caution-panel,
+  .caution-panel-red,
+  .deep-band {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    border-color: #333333 !important;
+    box-shadow: none !important;
+  }
+
+  a {
+    color: inherit !important;
+  }
 }

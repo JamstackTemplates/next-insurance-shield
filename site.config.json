@@ -1,7 +1,8 @@
 {
-  "name": "Jamstacks starter",
-  "description": "A neutral Next.js foundation for Jamstacks websites.",
-  "domain": "",
+  "name": "Lighthouse Cover Insurance",
+  "description": "Independent insurance broker on the Portland, Maine waterfront. Home, auto, boat and small-business cover compared across our insurer panel, with claims help when it counts.",
+  "domain": "next-insurance-shield.jamstacks.net",
+  "timeZone": "America/New_York",
   "jamstacks": {
     "siteId": "",
     "cdnUrl": "https://cdn.jamstacks.net"

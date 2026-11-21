@@ -1,0 +1,22 @@
+{
+  "templateId": "next-insurance-shield",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "fullPage": false,
+  "captures": [
+    {
+      "mode": "light",
+      "sha256": "d6da540136dc86e11eae55380ea62772b12b8eaea81312c282274b51b0f2426e",
+      "file": "jamstacks/home-light.jpg",
+      "bytes": 187548
+    },
+    {
+      "mode": "dark",
+      "sha256": "ad8da54b711a4b1c0cdac45012fa6f9723f1c81c3dfbccd7b7f65af4fbfb20c3",
+      "file": "jamstacks/home-dark.jpg",
+      "bytes": 184435
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Insurance Shield",
+  "description": "Coastal insurance broker with a Light List of cover types, a charted claims course and a why-use-a-broker explainer, under a lighthouse-and-shield crest.",
+  "tech": "next",
+  "type": "insurance",
+  "style": "shield",
+  "internal": false,
+  "components": [
+    "support-form"
+  ],
+  "configFile": "site.config.json",
+  "screenshots": {
+    "light": "jamstacks/home-light.jpg",
+    "dark": "jamstacks/home-dark.jpg",
+    "theme": {
+      "strategy": "media"
+    }
+  }
+}

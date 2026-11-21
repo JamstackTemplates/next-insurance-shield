@@ -23,6 +23,18 @@ export function validateHours(hours: readonly OpeningHours[]): void {
   }
   if (hours.length !== 7) throw new Error('hours: expected seven weekdays');
 }
+
+/** Current weekday in the business time zone, or null when unset/invalid. Browser-only helper. */
+export function currentDayInTimeZone(timeZone: string, now = new Date()): Day | null {
+  if (!timeZone) return null;
+  try {
+    const weekday = new Intl.DateTimeFormat('en-US', { timeZone, weekday: 'long' }).format(now) as Day;
+    return DAYS.includes(weekday) ? weekday : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Browser callers supply the clock; build/static views never compute current availability. */
 export function openingLabel(hours: readonly OpeningHours[], timeZone: string, now = new Date()): string {
   const fallback = 'See opening hours';
